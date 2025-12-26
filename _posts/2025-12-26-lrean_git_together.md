@@ -7,17 +7,29 @@ toc: true
 comments: false
 author: wian1998
 ---
+
 这是一期用于和大家分享一些简单的Git常用命令的文章，也用来我自己有需要要是回顾的内容。如果有需要会补充。
+
 ## Git 基础
+
 ### 工作区（Working Directory）
+
 工作区就是你电脑里能看到的项目文件夹，所有代码的创建、修改、删除都发生在这里。但请注意：工作区的改动默认不会被 Git 追踪，除非你主动告诉 Git "这些改动我准备提交了"。
+
 ### 暂存区（Staging Area）
+
 暂存区是 Git 独有的设计，位于 .git/index 文件中。它的作用就像一个"打包台"：你可以把多个文件的修改分批整理，确认无误后再一次性提交。使用 git add 命令就能把改动从工作区移到暂存区。
+
 ### 版本库（Repository）
+
 版本库是隐藏的 .git 目录，存储着项目的完整历史。每次 git commit 都会把暂存区的内容永久保存为一个新版本，这些记录不可修改，确保代码历史的完整性。
+
 ## Git 流程
+
 ![alt text](../images/2025-12-26/git_process.png)
+
 ## Git 配置
+
 ```shell
 git config --global user.name "你的名字"
 git config --global user.email "你的邮箱"
@@ -35,7 +47,9 @@ git config --global color.ui true
 git config --global core.autocrlf true  # Windows
 git config --global core.autocrlf input  # macOS/Linux
 ```
+
 ## Git 项目
+
 ```shell
 # 初始化一个git仓库
 mkdir my_project
@@ -56,7 +70,9 @@ git clone https://gitlab.com/your-repo/your-project.git
 
 # .git是本体，包含了项目的所有历史记录和配置信息。
 ```
+
 ### Git 分支管理
+
 ```shell
 # 查看本地分支
 git branch
@@ -80,6 +96,7 @@ git branch <分支名> <提交ID>
 # 从远程分支创建本地分支
 git checkout -b <本地分支名> origin/<远程分支名>
 ```
+
 ```shell
 # 切换到已存在的分支
 git checkout <分支名>
@@ -90,6 +107,7 @@ git checkout -b <分支名>
 # 切换到上一个分支
 git checkout -
 ```
+
 ```shell
 # 重命名当前分支
 git branch -m <新分支名>
@@ -97,6 +115,7 @@ git branch -m <新分支名>
 # 重命名指定分支
 git branch -m <旧分支名> <新分支名>
 ```
+
 ```shell
 # 删除本地分支（确保已合并）
 git branch -d <分支名>
@@ -107,20 +126,28 @@ git branch -D <分支名>
 # 删除远程分支
 git push origin --delete <分支名>
 ```
+
 ## 分支合并
+
 ### Merge 
+
 ```shell
 # 假设你正在 main 分支上，想要将 new-feature 分支的代码合并过来
 git merge local-dev
 ```
+
 注意：如果两个分支在同一个文件的同一部分都有改动，Git 就会提示 **冲突**，这时你需要手动解决冲突。
+
 ## Rebase
+
 ```shell
 # Rebase 是另一种合并分支的方式
 git checkout local-dev
 git rebase origin/dev
 ```
+
 ## 远程仓库
+
 ```shell
 # 查看所有远程仓库
 git remote -v
@@ -137,7 +164,9 @@ git push -u origin new-feature
 # 从远程仓库拉取代码并自动合并
 git pull origin main
 ```
+
 ## 暂存
+
 ```shell
 # 如果你在开发过程中需要临时切换到其他任务，但不想提交当前的未完成代码，可以使用 git stash 来保存当前的工作进度。 stash暂存区是一个栈
 git stash
@@ -201,7 +230,9 @@ revert：回滚之前的提交
 - 示例：revert: 回滚提交 abc123，修复因其引入的错误
 
 ## 实践场景，以rebase为例
+
 ### 1. 一次普普通通的提交
+
 ```shell
 # 将所有需要提交的修改添加到暂存区
 git add .
@@ -225,6 +256,7 @@ git push -u origin <本地分支名>
 ```
 
 ### 2. 另一次普普通通的提交
+
 ```shell
 # 首先将所有修改添加到暂存区
 git stash
@@ -254,6 +286,7 @@ git push -u origin <本地分支名>
 ```
 
 ### 3. 需要解决多个冲突的场景
+
 ```shell
 # 冲突一般发生在merge或者rebase之后
 # 获取远程更新
@@ -281,6 +314,7 @@ git add . && git rebase --continue
 - `>>>>>>> feature`：合并进来的分支的内容
 
 ### 4. amend
+
 ```shell
 # git commit --amend 允许你修改最近一次的提交
 
@@ -298,6 +332,7 @@ echo "通常一个MR最好只包含一个commit，避免一个MR中又多个comm
 ```
 
 ### 5. Squash
+
 ```shell
 # 另一种合并commit的方法是 squash
 git rebase -i HEAD~5
@@ -322,7 +357,9 @@ squash mno345 Commit message for commit 5
 
 # Git 会再次打开vim编辑器，让你编辑合并后的提交信息。默认情况下，Git 会将所有被 squash 的提交信息合并到一个新的提交信息中。你可以选择保留所有提交信息，或者编辑成一个新的提交信息。
 ```
+
 ### 6. Reset
+
 ```shell
 git log
 
@@ -361,6 +398,7 @@ Date:   Wed Dec 17 14:07:44 2025 +0800
 
     refactor: optimize precheck logic
 ```
+
 解决方法：
 ```shell
 # 重置到某个commit 
