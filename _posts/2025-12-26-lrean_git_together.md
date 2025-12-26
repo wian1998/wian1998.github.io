@@ -337,7 +337,7 @@ Date:   Wed Dec 17 14:07:44 2025 +0800
 
     refactor: optimize precheck logic
 ```
-HEAD：代表当前所在的提交，当前指向commit 2b4f8a008d01c3aeb443e1f782c9a9e85e3467ff
+HEAD：代表当前所在的提交，当前指向commit b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1
 这时，进行了一次不需要的提交
 ```shell
 git log
